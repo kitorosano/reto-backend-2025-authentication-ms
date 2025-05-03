@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ErrorCodesKeys } from '../../../shared/errors/error-code-keys.enum';
 import { BadModelException } from '../../../shared/errors/exceptions/bad-model.exception';
 import { User } from '../models/user.model';
+import { HashService } from './hash.service';
 import { UuidService } from './uuid.service';
 
 interface RegisterUser {
@@ -16,9 +17,17 @@ export class UserService {
   private readonly MAX_NAME_LENGTH = 20;
   private readonly MIN_PASSWORD_LENGTH = 6;
 
-  constructor(private readonly uuidService: UuidService) {}
+  constructor(
+    private readonly uuidService: UuidService,
+    private readonly hashService: HashService,
+  ) {}
 
-  create({ name, email, password, confirmPassword }: RegisterUser): User {
+  async create({
+    name,
+    email,
+    password,
+    confirmPassword,
+  }: RegisterUser): Promise<User> {
     const user = new User();
 
     user.setId(this.uuidService.generate());
@@ -30,8 +39,10 @@ export class UserService {
     if (
       this.validatePassword(password) &&
       this.validateConfirmPassword(password, confirmPassword)
-    )
-      user.setPassword(this.hashPassword(password));
+    ) {
+      const hashedPassword = await this.hashPassword(password);
+      user.setPassword(hashedPassword);
+    }
 
     return user;
   }
@@ -80,7 +91,7 @@ export class UserService {
     throw new BadModelException(ErrorCodesKeys.CONFIRM_PASSWORD_NOT_MATCH);
   }
 
-  private hashPassword(password: string): string {
-    return password; // TODO: Implement password hashing
+  private hashPassword(password: string): Promise<string> {
+    return this.hashService.hash(password);
   }
 }

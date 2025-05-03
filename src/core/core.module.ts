@@ -5,6 +5,7 @@ import { UserServicePort } from './application/ports/inbounds/user.service.port'
 import { UserService } from './domain/services/user.service';
 import { UuidService } from './domain/services/uuid.service';
 import { RegisterUserUseCase } from './application/usecases/register-user.usecase';
+import { HashService } from './domain/services/hash.service';
 
 @Module({
   controllers: [UserHTTPAdapter],
@@ -12,6 +13,7 @@ import { RegisterUserUseCase } from './application/usecases/register-user.usecas
     // Domain Services
     UserService,
     UuidService,
+    HashService,
 
     // Inbound Ports
     {

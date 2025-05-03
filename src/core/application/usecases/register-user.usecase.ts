@@ -32,7 +32,7 @@ export class RegisterUserUseCase {
       throw new BadModelException(ErrorCodesKeys.USER_ALREADY_EXISTS);
     }
 
-    const user = this.service.create(dto);
+    const user = await this.service.create(dto);
 
     const userCreated = await this.repository.save(user);
 
