@@ -88,7 +88,7 @@ export class UserService {
 
     if (isValid) return true;
 
-    throw new BadModelException(ErrorCodesKeys.CONFIRM_PASSWORD_NOT_MATCH);
+    throw new BadModelException(ErrorCodesKeys.PASSWORDS_NOT_MATCH);
   }
 
   private hashPassword(password: string): Promise<string> {

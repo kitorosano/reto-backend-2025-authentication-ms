@@ -1,3 +1,7 @@
+export type PersistenceDrivers = 'mongodb';
+export type AuthDrivers = 'jwt';
+
 export interface ApplicationBootstrapOptions {
-  driver: 'mongodb';
+  persistenceDriver: PersistenceDrivers;
+  authDriver: AuthDrivers;
 }

@@ -6,7 +6,8 @@ import { Log } from './shared/utils/log';
 async function bootstrap() {
   const app = await NestFactory.create(
     AppModule.register({
-      driver: environment.driver,
+      persistenceDriver: environment.persistenceDriver,
+      authDriver: environment.authDriver,
     }),
   );
 

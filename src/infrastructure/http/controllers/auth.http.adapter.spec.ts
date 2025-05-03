@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserHTTPAdapter } from './user.http.adapter';
+import { AuthHTTPAdapter } from './auth.http.adapter';
 
 describe('UserHTTPAdapter', () => {
-  let controller: UserHTTPAdapter;
+  let controller: AuthHTTPAdapter;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [UserHTTPAdapter],
+      controllers: [AuthHTTPAdapter],
       providers: [],
     }).compile();
 
-    controller = app.get<UserHTTPAdapter>(UserHTTPAdapter);
+    controller = app.get<AuthHTTPAdapter>(AuthHTTPAdapter);
   });
 
   it('should be defined', () => {

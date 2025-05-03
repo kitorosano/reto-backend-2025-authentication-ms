@@ -14,6 +14,10 @@ export const EsDictionary = {
       message: 'Error inesperado en el acceso a datos',
       detail: 'Ocurrió un error inesperado en el repositorio',
     },
+    [ErrorCodesKeys.TOKEN_GENERATION_FAILED]: {
+      message: 'Error al generar el token',
+      detail: 'Ocurrió un error al generar el token de acceso',
+    },
   },
   [ExceptionTypeKeys.BAD_MODEL]: {
     [ErrorCodesKeys.REQUEST_NOT_VALID]: {
@@ -36,19 +40,25 @@ export const EsDictionary = {
       message: 'La contraseña es demasiado corta',
       detail: 'La contraseña debe tener al menos 6 caracteres',
     },
-    [ErrorCodesKeys.CONFIRM_PASSWORD_NOT_MATCH]: {
-      message: 'La contraseña de confirmación no coincide',
-      detail: 'La contraseña de confirmación debe coincidir con la contraseña',
+    [ErrorCodesKeys.PASSWORDS_NOT_MATCH]: {
+      message: 'Las contraseñas no coinciden',
+      detail:
+        'La contraseña de confirmación debe coincidir con la contraseña original',
     },
     [ErrorCodesKeys.USER_ALREADY_EXISTS]: {
       message: 'El usuario ya existe',
       detail: 'Ya existe un usuario con el correo electrónico proporcionado',
     },
+    [ErrorCodesKeys.PASSWORD_INCORRECT]: {
+      message: 'Contraseña incorrecta',
+      detail: 'La contraseña proporcionada no es correcta',
+    },
   },
   [ExceptionTypeKeys.NOT_FOUND]: {
     [ErrorCodesKeys.USER_NOT_FOUND]: {
       message: 'Usuario no encontrado',
-      detail: 'No se encontró el usuario con el ID proporcionado',
+      detail:
+        'No se encontró el usuario con el correo electrónico proporcionado',
     },
   },
   [ExceptionTypeKeys.INVALID_PERMISSIONS]: {},

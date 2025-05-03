@@ -9,7 +9,12 @@ export class AppModule {
     return {
       module: AppModule,
       imports: [
-        CoreModule.withInfrastructure(InfrastructureModule.use(options.driver)),
+        CoreModule.withInfrastructure(
+          InfrastructureModule.use(
+            options.persistenceDriver,
+            options.authDriver,
+          ),
+        ),
       ],
     };
   }
