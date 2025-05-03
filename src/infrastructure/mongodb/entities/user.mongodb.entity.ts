@@ -14,7 +14,7 @@ export class UserMongoDBEntity {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true, index: true, searchIndex: true })
   email: string;
 
   @Prop({ required: true })

@@ -4,6 +4,7 @@ import { ApplicationService } from './application/application.service';
 import { UserServicePort } from './application/ports/inbounds/user.service.port';
 import { UserService } from './domain/services/user.service';
 import { UuidService } from './domain/services/uuid.service';
+import { RegisterUserUseCase } from './application/usecases/register-user.usecase';
 
 @Module({
   controllers: [UserHTTPAdapter],
@@ -19,6 +20,7 @@ import { UuidService } from './domain/services/uuid.service';
     },
 
     // Use Cases
+    RegisterUserUseCase,
   ],
 })
 export class CoreModule {

@@ -8,7 +8,7 @@ interface RegisterUser {
   name: string;
   email: string;
   password: string;
-  passwordConfirmation: string;
+  confirmPassword: string;
 }
 
 @Injectable()
@@ -18,7 +18,7 @@ export class UserService {
 
   constructor(private readonly uuidService: UuidService) {}
 
-  create({ name, email, password, passwordConfirmation }: RegisterUser): User {
+  create({ name, email, password, confirmPassword }: RegisterUser): User {
     const user = new User();
 
     user.setId(this.uuidService.generate());
@@ -29,7 +29,7 @@ export class UserService {
 
     if (
       this.validatePassword(password) &&
-      this.validatePasswordConfirmation(password, passwordConfirmation)
+      this.validateConfirmPassword(password, confirmPassword)
     )
       user.setPassword(this.hashPassword(password));
 
@@ -52,7 +52,7 @@ export class UserService {
     throw new BadModelException(ErrorCodesKeys.NAME_TOO_LONG);
   }
 
-  private validateEmail(email: string): boolean {
+  validateEmail(email: string): boolean {
     const REGEX_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const isValid = REGEX_EMAIL.test(email);
 
@@ -66,18 +66,18 @@ export class UserService {
 
     if (isValid) return true;
 
-    throw new BadModelException(ErrorCodesKeys.REQUEST_NOT_VALID);
+    throw new BadModelException(ErrorCodesKeys.PASSWORD_TOO_SHORT);
   }
 
-  private validatePasswordConfirmation(
+  private validateConfirmPassword(
     password: string,
-    passwordConfirmation: string,
+    ConfirmPassword: string,
   ): boolean {
-    const isValid = password === passwordConfirmation;
+    const isValid = password === ConfirmPassword;
 
     if (isValid) return true;
 
-    throw new BadModelException(ErrorCodesKeys.REQUEST_NOT_VALID);
+    throw new BadModelException(ErrorCodesKeys.CONFIRM_PASSWORD_NOT_MATCH);
   }
 
   private hashPassword(password: string): string {

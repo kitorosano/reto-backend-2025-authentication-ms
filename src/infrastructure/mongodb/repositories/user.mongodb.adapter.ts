@@ -8,6 +8,7 @@ import {
   UserMongoDBDocument,
   UserMongoDBEntity,
 } from '../entities/user.mongodb.entity';
+import { UserMongoDBMapper } from '../mappers/user.mongodb.mapper';
 
 export class UserMongoDBAdapter implements UserRepositoryPort {
   constructor(
@@ -16,6 +17,31 @@ export class UserMongoDBAdapter implements UserRepositoryPort {
   ) {}
 
   async save(user: User): Promise<User> {
-    throw new UnexpectedException(ErrorCodesKeys.REPOSITORY_UNEXPECTED);
+    try {
+      const entity = new this.userEntity(user);
+      const savedEntity = await entity.save();
+
+      return UserMongoDBMapper.toModel(savedEntity);
+    } catch (error) {
+      throw new UnexpectedException(
+        ErrorCodesKeys.REPOSITORY_UNEXPECTED,
+        error as Error,
+      );
+    }
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    try {
+      const entity = await this.userEntity.findOne({ email }).exec();
+
+      if (!entity) return null;
+
+      return UserMongoDBMapper.toModel(entity);
+    } catch (error) {
+      throw new UnexpectedException(
+        ErrorCodesKeys.REPOSITORY_UNEXPECTED,
+        error as Error,
+      );
+    }
   }
 }
