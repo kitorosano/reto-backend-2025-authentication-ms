@@ -62,7 +62,7 @@ export default {
   persistenceDriver: environment.PERSISTENCE_DRIVER as PersistenceDrivers,
   persistenceDriverUri: environment.PERSISTENCE_DRIVER_URI,
 
-  authDriver: environment.PERSISTENCE_DRIVER as AuthDrivers,
+  authDriver: environment.AUTH_DRIVER as AuthDrivers,
   authDriverSecret: environment.AUTH_DRIVER_SECRET,
   authDriverExpiresIn: environment.AUTH_DRIVER_EXPIRES_IN,
   authDriverRefreshSecret: environment.AUTH_DRIVER_REFRESH_SECRET,
