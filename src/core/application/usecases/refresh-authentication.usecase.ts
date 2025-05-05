@@ -5,7 +5,6 @@ import { UnexpectedException } from '../../../shared/errors/exceptions/unexpecte
 import { Log } from '../../../shared/utils/log';
 import { Token } from '../../domain/models/token.model';
 import { AuthService } from '../../domain/services/auth.service';
-import { UserService } from '../../domain/services/user.service';
 import { UserRepositoryPort } from '../ports/outbounds/user.repository.port';
 
 type DecodedToken = {
@@ -20,28 +19,29 @@ type DecodedToken = {
 export class RefreshAuthenticationUseCase {
   constructor(
     private readonly repository: UserRepositoryPort,
-    private readonly userService: UserService,
     private readonly authService: AuthService,
   ) {}
 
   async execute(refreshToken: string): Promise<Token> {
-    const decodedToken: DecodedToken =
+    console.log(refreshToken);
+    const decodedToken =
       await this.authService.verifyRefreshToken(refreshToken);
+    if (!decodedToken)
+      throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
 
-    const { sub: userId, email } = decodedToken;
     Log.info(
       'RefreshAuthenticationUseCase',
-      `User with email ${email} is refreshing token`,
+      `User with email ${decodedToken.email} is refreshing token`,
     );
 
-    const user = await this.repository.findById(userId);
+    const user = await this.repository.findById(decodedToken.sub);
     if (!user || !user.refreshToken) {
       Log.error(
         'RefreshAuthenticationUseCase',
-        `User with email ${email} does not exist`,
+        `User with email ${decodedToken.email} does not exist`,
       );
       throw new InvalidPermissionsException(
-        ErrorCodesKeys.USER_OR_TOKEN_NOT_FOUND,
+        ErrorCodesKeys.USER_NOT_AUTHENTICATED,
       );
     }
 
@@ -52,7 +52,7 @@ export class RefreshAuthenticationUseCase {
     if (!matchingTokens) {
       Log.error(
         'RefreshAuthenticationUseCase',
-        `Refresh token does not match for user with email ${email}`,
+        `Refresh token does not match for user with email ${decodedToken.email}`,
       );
       throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
     }
@@ -74,7 +74,7 @@ export class RefreshAuthenticationUseCase {
     if (!successUpdate) {
       Log.error(
         'AuthenticateUserUseCase',
-        `Failed to update refresh token for user with email ${email}`,
+        `Failed to update refresh token for user with email ${decodedToken.email}`,
       );
       throw new UnexpectedException(ErrorCodesKeys.TOKEN_STORAGE_FAILED);
     }

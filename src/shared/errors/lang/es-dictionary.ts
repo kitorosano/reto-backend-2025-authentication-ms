@@ -22,6 +22,10 @@ export const EsDictionary = {
       message: 'Error al almacenar el token',
       detail: 'Ocurrió un error al almacenar el token de actualización',
     },
+    [ErrorCodesKeys.TOKEN_CLEARING_FAILED]: {
+      message: 'Error al limpiar el token',
+      detail: 'Ocurrió un error al limpiar el token de actualización',
+    },
   },
   [ExceptionTypeKeys.BAD_MODEL]: {
     [ErrorCodesKeys.REQUEST_NOT_VALID]: {
@@ -75,10 +79,9 @@ export const EsDictionary = {
       message: 'Autenticación no válida',
       detail: 'El token de acceso proporcionado no es válido o ha expirado',
     },
-    [ErrorCodesKeys.USER_OR_TOKEN_NOT_FOUND]: {
-      message: 'Acceso de usuario no encontrado',
-      detail:
-        'No se encontró el usuario o el token de actualización proporcionado no es válido',
+    [ErrorCodesKeys.USER_NOT_AUTHENTICATED]: {
+      message: 'Usuario no autenticado',
+      detail: 'El usuario no está autenticado o no tiene permisos adecuados',
     },
   },
 };

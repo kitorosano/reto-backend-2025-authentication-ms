@@ -8,7 +8,7 @@ import { UnexpectedException } from '../../../shared/errors/exceptions/unexpecte
 import { Token } from '../models/token.model';
 import { HashService } from './hash.service';
 
-interface ComparePasswords {
+interface ValidateHash {
   plainString: string;
   hashedString: string;
 }
@@ -19,21 +19,22 @@ interface GenerateToken {
   name: string;
 }
 
+type DecodedToken = {
+  sub: string;
+  email: string;
+  name: string;
+  iat: number;
+  exp: number;
+};
+
 @Injectable()
 export class AuthService {
-  private readonly TOKEN_EXPIRATION_TIME = environment.authDriverExpiresIn;
-  private readonly REFRESH_TOKEN_EXPIRATION_TIME =
-    environment.authDriverRefreshExpiresIn;
-
   constructor(
     private readonly jwtService: JwtService,
     private readonly hashService: HashService,
   ) {}
 
-  validateHash({
-    plainString,
-    hashedString,
-  }: ComparePasswords): Promise<boolean> {
+  validateHash({ plainString, hashedString }: ValidateHash): Promise<boolean> {
     return this.hashService.compare(plainString, hashedString);
   }
 
@@ -48,7 +49,8 @@ export class AuthService {
           name,
         },
         {
-          expiresIn: this.TOKEN_EXPIRATION_TIME,
+          secret: environment.authDriverSecret,
+          expiresIn: environment.authDriverExpiresIn,
         },
       ),
       this.jwtService.signAsync(
@@ -58,7 +60,8 @@ export class AuthService {
           name,
         },
         {
-          expiresIn: this.REFRESH_TOKEN_EXPIRATION_TIME,
+          secret: environment.authDriverRefreshSecret,
+          expiresIn: environment.authDriverRefreshExpiresIn,
         },
       ),
     ]).catch((error) => {
@@ -70,14 +73,14 @@ export class AuthService {
 
     token.setAccessToken(accessToken);
     token.setTokenType(TokenType.BEARER);
-    token.setExpiresIn(this.TOKEN_EXPIRATION_TIME);
+    token.setExpiresIn(environment.authDriverExpiresIn);
     token.setRefreshToken(refreshToken);
     // token.setScope(''); // TODO: Implement scope logic
 
     return token;
   }
 
-  async hashRefreshToken(refreshToken: string): Promise<string> {
+  hashRefreshToken(refreshToken: string): Promise<string> {
     return this.hashService.hash(refreshToken).catch((error) => {
       throw new UnexpectedException(
         ErrorCodesKeys.TOKEN_GENERATION_FAILED,
@@ -86,9 +89,23 @@ export class AuthService {
     });
   }
 
-  async verifyRefreshToken(refreshToken: string) {
-    return await this.jwtService.verifyAsync(refreshToken).catch(() => {
-      throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
-    });
+  verifyToken(refreshToken: string): Promise<DecodedToken> {
+    return this.jwtService
+      .verifyAsync(refreshToken, {
+        secret: environment.authDriverSecret,
+      })
+      .catch(() => {
+        throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
+      });
+  }
+
+  verifyRefreshToken(refreshToken: string): Promise<DecodedToken> {
+    return this.jwtService
+      .verifyAsync(refreshToken, {
+        secret: environment.authDriverRefreshSecret,
+      })
+      .catch(() => {
+        throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
+      });
   }
 }

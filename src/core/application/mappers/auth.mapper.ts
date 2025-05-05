@@ -7,6 +7,7 @@ export class AuthMapper {
   static toUserDTO(model: User): UserDTO {
     const dto = new UserDTO();
 
+    dto.id = model.id;
     dto.email = model.email;
     dto.name = model.name;
 

@@ -58,4 +58,10 @@ export class AuthHTTPAdapter {
     const token = await this.application.refreshAuthetication(refreshToken);
     return AuthHTTPMapper.toLoginResponse(token);
   }
+
+  @Get('logout')
+  @HttpCode(204)
+  async logoutUser(@BearerToken() token: string): Promise<void> {
+    await this.application.logoutUser(token);
+  }
 }

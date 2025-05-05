@@ -9,6 +9,6 @@ export abstract class UserRepositoryPort {
 
   abstract updateRefreshToken(
     userId: string,
-    refreshToken: string,
+    refreshToken: string | null,
   ): Promise<User | null>;
 }

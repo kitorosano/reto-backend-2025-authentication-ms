@@ -17,13 +17,7 @@ export class InfrastructureModule {
         : [];
 
     const authModule =
-      authDriver === 'jwt'
-        ? JwtModule.register({
-            secret: environment.authDriverSecret,
-          })
-        : JwtModule.register({
-            secret: environment.authDriverSecret,
-          }); // TODO: Add other auth modules
+      authDriver === 'jwt' ? JwtModule.register({}) : JwtModule.register({}); // TODO: Add other auth modules
 
     return {
       module: InfrastructureModule,
