@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   HttpCode,
   Post,
   UseFilters,
@@ -9,6 +10,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { AuthServicePort } from '../../../core/application/ports/inbounds/auth.service.port';
+import { BearerToken } from '../common/decorators/bearer-token.decorator';
 import { CustomExceptionFilter } from '../common/filters/custom-exception.filter';
 import { RequestValidationPipe } from '../common/pipes/requests-validation.pipe';
 import { AuthHTTPMapper } from '../mappers/auth.http.mapper';
@@ -45,6 +47,15 @@ export class AuthHTTPAdapter {
 
     const token = await this.application.authenticateUser(dto);
 
+    return AuthHTTPMapper.toLoginResponse(token);
+  }
+
+  @Get('refresh')
+  @HttpCode(200)
+  async refreshAuthetication(
+    @BearerToken() refreshToken: string,
+  ): Promise<TokenHTTPResponse> {
+    const token = await this.application.refreshAuthetication(refreshToken);
     return AuthHTTPMapper.toLoginResponse(token);
   }
 }

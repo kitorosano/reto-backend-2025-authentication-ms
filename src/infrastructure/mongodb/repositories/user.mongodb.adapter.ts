@@ -44,4 +44,43 @@ export class UserMongoDBAdapter implements UserRepositoryPort {
       );
     }
   }
+
+  async findById(id: string): Promise<User | null> {
+    try {
+      const entity = await this.userEntity.findOne({ id }).exec();
+
+      if (!entity) return null;
+
+      return UserMongoDBMapper.toModel(entity);
+    } catch (error) {
+      throw new UnexpectedException(
+        ErrorCodesKeys.REPOSITORY_UNEXPECTED,
+        error as Error,
+      );
+    }
+  }
+
+  async updateRefreshToken(
+    userId: string,
+    refreshToken: string,
+  ): Promise<User | null> {
+    try {
+      const entity = await this.userEntity
+        .findOneAndUpdate(
+          { id: userId },
+          { refreshToken },
+          { new: true, runValidators: true },
+        )
+        .exec();
+
+      if (!entity) return null;
+
+      return UserMongoDBMapper.toModel(entity);
+    } catch (error) {
+      throw new UnexpectedException(
+        ErrorCodesKeys.REPOSITORY_UNEXPECTED,
+        error as Error,
+      );
+    }
+  }
 }

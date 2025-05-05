@@ -9,6 +9,7 @@ export class UserMongoDBMapper {
     user.name = entity.name;
     user.email = entity.email;
     user.password = entity.password;
+    user.refreshToken = entity.refreshToken;
 
     return user;
   }

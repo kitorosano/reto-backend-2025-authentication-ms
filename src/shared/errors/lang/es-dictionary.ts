@@ -18,6 +18,10 @@ export const EsDictionary = {
       message: 'Error al generar el token',
       detail: 'Ocurrió un error al generar el token de acceso',
     },
+    [ErrorCodesKeys.TOKEN_STORAGE_FAILED]: {
+      message: 'Error al almacenar el token',
+      detail: 'Ocurrió un error al almacenar el token de actualización',
+    },
   },
   [ExceptionTypeKeys.BAD_MODEL]: {
     [ErrorCodesKeys.REQUEST_NOT_VALID]: {
@@ -53,6 +57,11 @@ export const EsDictionary = {
       message: 'Contraseña incorrecta',
       detail: 'La contraseña proporcionada no es correcta',
     },
+    [ErrorCodesKeys.AUTH_HEADER_NOT_PROVIDED]: {
+      message: 'Encabezado de autorización no proporcionado',
+      detail:
+        'El encabezado de autorización no fue proporcionado en la solicitud',
+    },
   },
   [ExceptionTypeKeys.NOT_FOUND]: {
     [ErrorCodesKeys.USER_NOT_FOUND]: {
@@ -61,5 +70,15 @@ export const EsDictionary = {
         'No se encontró el usuario con el correo electrónico proporcionado',
     },
   },
-  [ExceptionTypeKeys.INVALID_PERMISSIONS]: {},
+  [ExceptionTypeKeys.INVALID_PERMISSIONS]: {
+    [ErrorCodesKeys.TOKEN_NOT_VALID]: {
+      message: 'Autenticación no válida',
+      detail: 'El token de acceso proporcionado no es válido o ha expirado',
+    },
+    [ErrorCodesKeys.USER_OR_TOKEN_NOT_FOUND]: {
+      message: 'Acceso de usuario no encontrado',
+      detail:
+        'No se encontró el usuario o el token de actualización proporcionado no es válido',
+    },
+  },
 };

@@ -6,6 +6,7 @@ import { UserDTO } from '../../shared/dto/user.dto';
 import { AuthMapper } from './mappers/auth.mapper';
 import { AuthServicePort } from './ports/inbounds/auth.service.port';
 import { AuthenticateUserUseCase } from './usecases/authenticate-user.usecase';
+import { RefreshAuthenticationUseCase } from './usecases/refresh-authentication-usecase';
 import { RegisterUserUseCase } from './usecases/register-user.usecase';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class ApplicationService implements AuthServicePort {
   constructor(
     private readonly registerUserUseCase: RegisterUserUseCase,
     private readonly authenticateUserUseCase: AuthenticateUserUseCase,
+    private readonly refreshAuthenticationUseCase: RefreshAuthenticationUseCase,
   ) {}
 
   async registerUser(dto: RegisterUserDTO): Promise<UserDTO> {
@@ -22,6 +24,11 @@ export class ApplicationService implements AuthServicePort {
 
   async authenticateUser(dto: LoginUserDTO): Promise<TokenDTO> {
     const token = await this.authenticateUserUseCase.execute(dto);
+    return AuthMapper.toTokenDTO(token);
+  }
+
+  async refreshAuthetication(refreshToken: string): Promise<TokenDTO> {
+    const token = await this.refreshAuthenticationUseCase.execute(refreshToken);
     return AuthMapper.toTokenDTO(token);
   }
 }

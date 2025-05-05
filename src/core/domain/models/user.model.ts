@@ -3,6 +3,7 @@ export class User {
   name: string;
   email: string;
   password: string;
+  refreshToken?: string;
 
   setId(id: string) {
     this.id = id;
@@ -18,5 +19,9 @@ export class User {
 
   setPassword(password: string) {
     this.password = password;
+  }
+
+  setRefreshToken(refreshToken: string) {
+    this.refreshToken = refreshToken;
   }
 }

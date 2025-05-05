@@ -36,7 +36,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
     if (exception instanceof NotFoundException)
       statusCode = HttpStatus.NOT_FOUND;
     if (exception instanceof InvalidPermissionsException)
-      statusCode = HttpStatus.FORBIDDEN;
+      statusCode = HttpStatus.UNAUTHORIZED;
 
     const errorResponse = ErrorHTTPMapper.toResponse(exception, language);
 

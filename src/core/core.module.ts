@@ -3,6 +3,7 @@ import { AuthHTTPAdapter } from '../infrastructure/http/controllers/auth.http.ad
 import { ApplicationService } from './application/application.service';
 import { AuthServicePort } from './application/ports/inbounds/auth.service.port';
 import { AuthenticateUserUseCase } from './application/usecases/authenticate-user.usecase';
+import { RefreshAuthenticationUseCase } from './application/usecases/refresh-authentication-usecase';
 import { RegisterUserUseCase } from './application/usecases/register-user.usecase';
 import { AuthService } from './domain/services/auth.service';
 import { HashService } from './domain/services/hash.service';
@@ -27,6 +28,7 @@ import { UuidService } from './domain/services/uuid.service';
     // Use Cases
     RegisterUserUseCase,
     AuthenticateUserUseCase,
+    RefreshAuthenticationUseCase,
   ],
 })
 export class CoreModule {

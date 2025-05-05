@@ -19,6 +19,9 @@ export class UserMongoDBEntity {
 
   @Prop({ required: true })
   password: string;
+
+  @Prop({ required: false })
+  refreshToken: string;
 }
 
 export type UserMongoDBDocument = HydratedDocument<UserMongoDBEntity>;

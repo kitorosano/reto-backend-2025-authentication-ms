@@ -18,7 +18,7 @@ export class AuthMapper {
     dto.accessToken = model.accessToken;
     dto.expiresIn = model.expiresIn;
     dto.tokenType = model.tokenType;
-    // dto.refreshToken = model.refreshToken;
+    dto.refreshToken = model.refreshToken;
     // dto.scope = model.scope;
 
     return dto;
