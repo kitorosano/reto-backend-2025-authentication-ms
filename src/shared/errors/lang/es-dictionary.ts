@@ -81,7 +81,7 @@ export const EsDictionary = {
     },
     [ErrorCodesKeys.USER_NOT_AUTHENTICATED]: {
       message: 'Usuario no autenticado',
-      detail: 'El usuario no está autenticado o no tiene permisos adecuados',
+      detail: 'El usuario no está autenticado',
     },
   },
 };
