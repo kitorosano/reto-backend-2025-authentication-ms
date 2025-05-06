@@ -35,9 +35,6 @@ importers:
       class-validator:
         specifier: ^0.14.2
         version: 0.14.2
-      dotenv:
-        specifier: ^16.5.0
-        version: 16.5.0
       joi:
         specifier: ^17.13.3
         version: 17.13.3
@@ -87,6 +84,9 @@ importers:
       '@types/supertest':
         specifier: ^6.0.2
         version: 6.0.3
+      dotenv:
+        specifier: ^16.5.0
+        version: 16.5.0
       eslint:
         specifier: ^9.18.0
         version: 9.25.1

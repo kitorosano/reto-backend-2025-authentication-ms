@@ -17,5 +17,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "exclude": ["**/test/*", "jest.config.js", "jest-setup.js"],
+  "include": ["src"]
 }
