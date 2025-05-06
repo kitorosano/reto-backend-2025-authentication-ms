@@ -10,11 +10,11 @@ import { UserRepositoryPort } from '../ports/outbounds/user.repository.port';
 export class LogoutUserUseCase {
   constructor(
     private readonly repository: UserRepositoryPort,
-    private readonly authService: AuthService,
+    private readonly service: AuthService,
   ) {}
 
   async execute(token: string): Promise<void> {
-    const decodedToken = await this.authService.verifyToken(token);
+    const decodedToken = await this.service.verifyToken(token);
     if (!decodedToken)
       throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
 
@@ -34,7 +34,7 @@ export class LogoutUserUseCase {
       );
     }
 
-    const matchingTokens = await this.authService.validateHash({
+    const matchingTokens = await this.service.validateHash({
       plainString: token,
       hashedString: user.refreshToken,
     });

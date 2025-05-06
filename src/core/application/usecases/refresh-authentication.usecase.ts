@@ -19,13 +19,12 @@ type DecodedToken = {
 export class RefreshAuthenticationUseCase {
   constructor(
     private readonly repository: UserRepositoryPort,
-    private readonly authService: AuthService,
+    private readonly service: AuthService,
   ) {}
 
   async execute(refreshToken: string): Promise<Token> {
-    console.log(refreshToken);
     const decodedToken =
-      await this.authService.verifyRefreshToken(refreshToken);
+      await this.service.verifyRefreshToken(refreshToken);
     if (!decodedToken)
       throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
 
@@ -45,7 +44,7 @@ export class RefreshAuthenticationUseCase {
       );
     }
 
-    const matchingTokens = await this.authService.validateHash({
+    const matchingTokens = await this.service.validateHash({
       plainString: refreshToken,
       hashedString: user.refreshToken,
     });
@@ -57,13 +56,13 @@ export class RefreshAuthenticationUseCase {
       throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
     }
 
-    const token = await this.authService.generateTokens({
+    const token = await this.service.generateTokens({
       userId: user.id,
       email: user.email,
       name: user.name,
     });
 
-    const hashedRefreshToken = await this.authService.hashRefreshToken(
+    const hashedRefreshToken = await this.service.hashRefreshToken(
       token.refreshToken,
     );
 

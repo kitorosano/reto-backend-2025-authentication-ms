@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'testing';
 process.env.PORT = 3001;
 
 process.env.NATS_SERVERS = 'nats://localhost:4222,nats://localhost:4223';

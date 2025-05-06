@@ -23,7 +23,6 @@ export class RegisterUserUseCase {
     this.service.validateEmail(dto.email);
 
     const existingUser = await this.repository.findByEmail(dto.email);
-
     if (existingUser) {
       Log.error(
         'RegisterUserUseCase',
