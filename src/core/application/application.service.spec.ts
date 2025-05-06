@@ -20,12 +20,6 @@ const mockUser = {
   refreshToken: null,
 };
 
-const mockUserDTO = {
-  id: mockUser.id,
-  email: mockRegisterUserDTO.email,
-  password: mockRegisterUserDTO.password,
-};
-
 const mockLoginUserDTO = {
   email: mockRegisterUserDTO.email,
   password: mockRegisterUserDTO.password,
@@ -37,13 +31,6 @@ const mockToken = {
   tokenType: 'Bearer',
   refreshToken: 'jwt',
   scope: '',
-};
-
-const mockTokenDTO = {
-  accessToken: mockToken.accessToken,
-  expiresIn: mockToken.expiresIn,
-  tokenType: mockToken.tokenType,
-  refreshToken: mockToken.refreshToken,
 };
 
 const mockRegisterUser = jest.fn().mockResolvedValue(mockUser);
@@ -138,7 +125,7 @@ describe('ApplicationService', () => {
   });
 
   it('should refresh authentication', async () => {
-    const result = await service.refreshAuthetication(mockToken.refreshToken);
+    const result = await service.refreshAuthentication(mockToken.refreshToken);
 
     expect(result.accessToken).toEqual(mockToken.accessToken);
     expect(result.expiresIn).toEqual(mockToken.expiresIn);

@@ -24,7 +24,7 @@ import { UserHTTPResponse } from '../models/user.http.response';
 @UseInterceptors(ClassSerializerInterceptor)
 @UsePipes(RequestValidationPipe)
 export class AuthHTTPAdapter {
-  constructor(private application: AuthServicePort) {}
+  constructor(private readonly application: AuthServicePort) {}
 
   @Post('register')
   @HttpCode(201)
@@ -55,7 +55,7 @@ export class AuthHTTPAdapter {
   async refreshAuthetication(
     @BearerToken() refreshToken: string,
   ): Promise<TokenHTTPResponse> {
-    const token = await this.application.refreshAuthetication(refreshToken);
+    const token = await this.application.refreshAuthentication(refreshToken);
     return AuthHTTPMapper.toLoginResponse(token);
   }
 

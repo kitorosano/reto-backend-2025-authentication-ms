@@ -1,16 +1,18 @@
+import { ErrorCodesKeys, ExceptionTypeKeys } from '../error-code-keys.enum';
+
 export class CustomException extends Error {
-  key: string;
+  key: ErrorCodesKeys;
   error: string;
   traceId: string;
   timestamp: string;
 
   /**
    * Creates an instance of CustomException.
-   * @param {string} key - The error key.
-   * @param {string} name - The name of the exception.
+   * @param {ErrorCodesKeys} key - The error key.
+   * @param {ExceptionTypeKeys} name - The name of the exception.
    * @param {any} [error] - The error message or details.
    */
-  constructor(key: string, name: string, error?: any) {
+  constructor(key: ErrorCodesKeys, name: ExceptionTypeKeys, error?: any) {
     super(name, { cause: error });
     this.name = name;
     this.key = key;

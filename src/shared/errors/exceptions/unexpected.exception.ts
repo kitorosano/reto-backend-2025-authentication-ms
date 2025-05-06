@@ -1,4 +1,4 @@
-import { ExceptionTypeKeys } from '../error-code-keys.enum';
+import { ErrorCodesKeys, ExceptionTypeKeys } from '../error-code-keys.enum';
 import { CustomException } from './custom.exception';
 
 /**
@@ -13,10 +13,10 @@ import { CustomException } from './custom.exception';
 export class UnexpectedException extends CustomException {
   /**
    * Creates an instance of UnexpectedException.
-   * @param {string} key - The error key.
+   * @param {ErrorCodesKeys} key - The error key.
    * @param {any} [error] - The error message or details.
    */
-  constructor(key: string, error?: any) {
+  constructor(key: ErrorCodesKeys, error?: any) {
     super(key, ExceptionTypeKeys.UNEXPECTED, error);
   }
 }

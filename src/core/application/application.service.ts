@@ -29,7 +29,7 @@ export class ApplicationService implements AuthServicePort {
     return AuthMapper.toTokenDTO(token);
   }
 
-  async refreshAuthetication(refreshToken: string): Promise<TokenDTO> {
+  async refreshAuthentication(refreshToken: string): Promise<TokenDTO> {
     const token = await this.refreshAuthenticationUseCase.execute(refreshToken);
     return AuthMapper.toTokenDTO(token);
   }

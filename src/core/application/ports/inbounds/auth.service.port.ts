@@ -7,7 +7,7 @@ export abstract class AuthServicePort {
 
   abstract authenticateUser(dto: LoginUserDTO): Promise<TokenDTO>;
 
-  abstract refreshAuthetication(refreshToken: string): Promise<TokenDTO>;
+  abstract refreshAuthentication(refreshToken: string): Promise<TokenDTO>;
 
   abstract logoutUser(token: string): Promise<void>;
 }

@@ -14,8 +14,8 @@ export class ErrorHTTPMapper {
     exception: CustomException,
     language: AvailableLanguages,
   ): ErrorHTTPResponse {
-    const code = exception.key || ErrorCodesKeys.UNIMPLEMENTED;
-    const type = exception.name || ExceptionTypeKeys.UNEXPECTED;
+    const code = exception.key;
+    const type = exception.name;
     const message = ErrorDictionary[language][type]?.[code]?.['message'];
     const detail = ErrorDictionary[language][type]?.[code]?.['detail'];
 

@@ -11,9 +11,11 @@ export const BearerToken = createParamDecorator(
     if (!authorization)
       throw new BadModelException(ErrorCodesKeys.AUTH_HEADER_NOT_PROVIDED);
 
-    const tokenWithoutBearer = authorization.replace('Bearer', '').trim();
-    if (!tokenWithoutBearer)
+    if (!authorization.startsWith('Bearer ')) {
       throw new InvalidPermissionsException(ErrorCodesKeys.TOKEN_NOT_VALID);
+    }
+
+    const tokenWithoutBearer = authorization.replace('Bearer', '').trim();
 
     return tokenWithoutBearer;
   },
