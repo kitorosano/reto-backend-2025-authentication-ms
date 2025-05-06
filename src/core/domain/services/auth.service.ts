@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import environment from 'src/config/environment';
+import environment from '../../../config/environment';
 import { TokenType } from '../../../shared/dto/token.dto';
 import { ErrorCodesKeys } from '../../../shared/errors/error-code-keys.enum';
 import { InvalidPermissionsException } from '../../../shared/errors/exceptions/invalid-permissions.exception';
@@ -75,7 +75,7 @@ export class AuthService {
     token.setTokenType(TokenType.BEARER);
     token.setExpiresIn(environment.authDriverExpiresIn);
     token.setRefreshToken(refreshToken);
-    // token.setScope(''); // TODO: Implement scope logic
+    token.setScope(''); // TODO: Implement scope logic
 
     return token;
   }
@@ -89,9 +89,9 @@ export class AuthService {
     });
   }
 
-  verifyToken(refreshToken: string): Promise<DecodedToken> {
+  verifyToken(token: string): Promise<DecodedToken> {
     return this.jwtService
-      .verifyAsync(refreshToken, {
+      .verifyAsync(token, {
         secret: environment.authDriverSecret,
       })
       .catch(() => {

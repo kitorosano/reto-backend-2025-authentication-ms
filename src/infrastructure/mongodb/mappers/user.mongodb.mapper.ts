@@ -5,11 +5,11 @@ export class UserMongoDBMapper {
   static toModel(entity: UserMongoDBDocument): User {
     const user = new User();
 
-    user.id = entity.id;
-    user.name = entity.name;
-    user.email = entity.email;
-    user.password = entity.password;
-    user.refreshToken = entity.refreshToken;
+    user.setId(entity.id);
+    user.setName(entity.name);
+    user.setEmail(entity.email);
+    user.setPassword(entity.password);
+    user.setRefreshToken(entity.refreshToken);
 
     return user;
   }

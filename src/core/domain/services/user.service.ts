@@ -14,12 +14,12 @@ interface RegisterUser {
 
 @Injectable()
 export class UserService {
-  private readonly MAX_NAME_LENGTH = 20;
-  private readonly MIN_PASSWORD_LENGTH = 6;
+  readonly MAX_NAME_LENGTH = 20;
+  readonly MIN_PASSWORD_LENGTH = 6;
 
   constructor(
-    private readonly uuidService: UuidService,
-    private readonly hashService: HashService,
+    readonly uuidService: UuidService,
+    readonly hashService: HashService,
   ) {}
 
   async create({
@@ -44,6 +44,8 @@ export class UserService {
       user.setPassword(hashedPassword);
     }
 
+    user.setRefreshToken(null);
+
     return user;
   }
 
@@ -55,7 +57,7 @@ export class UserService {
     throw new BadModelException(ErrorCodesKeys.ID_FORMAT_NOT_VALID);
   }
 
-  private validateName(name: string): boolean {
+  validateName(name: string): boolean {
     const isValid = name.length > 0 && name.length <= this.MAX_NAME_LENGTH;
 
     if (isValid) return true;
@@ -72,7 +74,7 @@ export class UserService {
     throw new BadModelException(ErrorCodesKeys.EMAIL_FORMAT_NOT_VALID);
   }
 
-  private validatePassword(password: string): boolean {
+  validatePassword(password: string): boolean {
     const isValid = password.length >= this.MIN_PASSWORD_LENGTH;
 
     if (isValid) return true;
@@ -80,10 +82,7 @@ export class UserService {
     throw new BadModelException(ErrorCodesKeys.PASSWORD_TOO_SHORT);
   }
 
-  private validateConfirmPassword(
-    password: string,
-    ConfirmPassword: string,
-  ): boolean {
+  validateConfirmPassword(password: string, ConfirmPassword: string): boolean {
     const isValid = password === ConfirmPassword;
 
     if (isValid) return true;
@@ -91,7 +90,7 @@ export class UserService {
     throw new BadModelException(ErrorCodesKeys.PASSWORDS_NOT_MATCH);
   }
 
-  private hashPassword(password: string): Promise<string> {
+  hashPassword(password: string): Promise<string> {
     return this.hashService.hash(password);
   }
 }
