@@ -29,7 +29,7 @@ export class ErrorHTTPMapper {
       ]['detail'];
 
     return {
-      error: code,
+      error: message ? code : ErrorCodesKeys.UNIMPLEMENTED,
       message: message || DEFAULT_ERROR_MESSAGE,
       detail: detail || DEFAULT_ERROR_DETAIL,
       traceId: exception.traceId,

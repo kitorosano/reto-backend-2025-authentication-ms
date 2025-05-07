@@ -44,10 +44,10 @@ describe('ErrorHTTPMapper', () => {
     expect(response.timestamp).toEqual(mockErrorResponse.timestamp);
   });
 
-  it('should map UnimplementedException to ErrorHTTPResponse if no key or type', () => {
+  it('should return default error message and detail if not found', () => {
     const exception = new CustomException(
-      ErrorCodesKeys.UNIMPLEMENTED,
-      ExceptionTypeKeys.UNEXPECTED,
+      'InvalidKey' as ErrorCodesKeys,
+      'InvalidType' as ExceptionTypeKeys,
     );
     const response = ErrorHTTPMapper.toResponse(
       exception,
@@ -66,7 +66,5 @@ describe('ErrorHTTPMapper', () => {
         ErrorCodesKeys.UNIMPLEMENTED
       ]['detail'],
     );
-    expect(response.traceId).toEqual(exception.traceId);
-    expect(response.timestamp).toEqual(exception.timestamp);
   });
 });

@@ -9,7 +9,6 @@ export class Log {
     const json = foo ? ` ${JSON.stringify(foo, null, 2)}` : '';
     const name = instace.name || instace;
     Logger.log(`[INFO] ${message}${json}`, `${name}`);
-    console.debug('[INFO] ', message, json, name);
   }
 
   static error(instace: any, message: string, foo?: any): void {
