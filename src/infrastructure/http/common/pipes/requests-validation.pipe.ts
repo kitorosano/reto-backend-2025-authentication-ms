@@ -5,7 +5,7 @@ import { BadModelException } from '../../../../shared/errors/exceptions/bad-mode
 @Injectable()
 export class RequestValidationPipe extends ValidationPipe {
   createExceptionFactory() {
-    return (validationErrors: ValidationError[] = []) => {
+    return (validationErrors: ValidationError[]) => {
       // const errors = this.flattenValidationErrors(validationErrors);
 
       // Log.error('RequestValidationPipe', 'Validation failed', errors);
