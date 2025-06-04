@@ -1,5 +1,5 @@
 const mockEnvs = {
-  NODE_ENV: 'string',
+  NODE_ENV: 'testing',
   PORT: 3001,
   NATS_SERVERS: 'string',
   PERSISTENCE_DRIVER: 'string',

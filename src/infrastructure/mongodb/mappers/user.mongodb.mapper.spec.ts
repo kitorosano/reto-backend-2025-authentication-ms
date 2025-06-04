@@ -1,4 +1,4 @@
-import { UserMongoDBDocument } from '../../../../dist/infrastructure/mongodb/entities/user.mongodb.entity';
+import { UserMongoDBDocument } from '../entities/user.mongodb.entity';
 import { UserMongoDBMapper } from './user.mongodb.mapper';
 
 const mockUserDocument = {
